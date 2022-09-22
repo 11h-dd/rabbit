@@ -7,5 +7,8 @@ import { RouterLink, RouterView } from 'vue-router'
 </template>
 
 <style scoped lang="less">
-
+.box {
+  color: @xtxColor;
+  .hoverShadow;
+}
 </style>
