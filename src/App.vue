@@ -1,5 +1,14 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import XtxRequestManager from './utils/XtxRequestManager';
+import { useUserStore } from "@/stores/userStore";
+const userStore = useUserStore();
+userStore.$patch({ profile: { token: "test token" } });
+XtxRequestManager.instance._instance.get('/home/category/head/mutli').then(res => {
+  console.log(res)
+})
+// const v2 = XtxRequestManager.instance
+// console.log(v1 === v2, 'v1===v2')
 </script>
 
 <template>

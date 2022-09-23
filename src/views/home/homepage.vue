@@ -8,9 +8,6 @@
 </template>
     
 <style scoped lang="less">
-@import "../../assets/styles/variables";
-@import "../../assets/styles/mixin";
-
 .box {
     color: @xtxColor;
     .hoverShadow;
