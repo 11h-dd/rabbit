@@ -1,15 +1,12 @@
-<script setup lang="ts">
+<script setup lang="ts"></script>
 
-
-</script>
-    
 <template>
-    <div class="box">homePage </div>
+  <div class="box">homePage</div>
 </template>
-    
+
 <style scoped lang="less">
 .box {
-    color: @xtxColor;
-    .hoverShadow;
+  color: @xtxColor;
+  .hoverShadow;
 }
 </style>

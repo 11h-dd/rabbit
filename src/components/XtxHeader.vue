@@ -1,13 +1,19 @@
-<script setup lang="ts">
-
-</script>
-    
+<!-- src/components/XtxHeader.vue -->
 <template>
-
-    <div>Header </div>
-
+  <header class="app-header">
+    <div class="container">
+      <XtxHeaderNav />
+    </div>
+  </header>
 </template>
-    
-<style scoped lang="less">
 
+<style scoped lang="less">
+.app-header {
+  background: #fff;
+
+  .container {
+    display: flex;
+    align-items: center;
+  }
+}
 </style>
