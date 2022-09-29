@@ -5,13 +5,25 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    FreshGoods: typeof import('./src/views/home/components/FreshGoods.vue')['default']
+    HomeBanner: typeof import('./src/views/home/components/HomeBanner.vue')['default']
+    HomeCategory: typeof import('./src/views/home/components/HomeCategory.vue')['default']
+    HomeLook: typeof import('./src/views/home/components/homeLook.vue')['default']
     Homepage: typeof import('./src/views/home/homepage.vue')['default']
+    HomePanel: typeof import('./src/views/home/components/HomePanel.vue')['default']
+    HotRecommends: typeof import('./src/views/home/components/HotRecommends.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SubCategoryPage: typeof import('./src/views/category/SubCategoryPage.vue')['default']
+    TopCategoryPage: typeof import('./src/views/category/TopCategoryPage.vue')['default']
+    XtxCarousel: typeof import('./src/components/XtxCarousel.vue')['default']
     XtxFooter: typeof import('./src/components/XtxFooter.vue')['default']
     XtxHeader: typeof import('./src/components/XtxHeader.vue')['default']
     XtxHeaderNav: typeof import('./src/components/XtxHeaderNav.vue')['default']
+    XtxHeaderSticky: typeof import('./src/components/XtxHeaderSticky.vue')['default']
     XtxLayout: typeof import('./src/components/XtxLayout.vue')['default']
+    XtxMore: typeof import('./src/components/XtxMore.vue')['default']
+    XtxSkeleton: typeof import('./src/components/XtxSkeleton.vue')['default']
     XtxTopNav: typeof import('./src/components/XtxTopNav.vue')['default']
   }
 }
