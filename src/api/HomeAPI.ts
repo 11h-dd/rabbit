@@ -5,6 +5,8 @@ import type { Brands } from "@/types/Brands";
 import type { Banner } from "@/types/Banner";
 import type { Goods } from "@/types/Goods";
 import type { HotRecommends } from "@/types/HotRecommends";
+import type { cate2 } from "@/types/cate2";
+import type { Special } from "@/types/Special";
 
 export class HomeAPI {
   // 推荐品牌
@@ -38,6 +40,22 @@ export class HomeAPI {
   static getHotRecommends() {
     return XtxRequestManager.instance.request<XtxResponse<HotRecommends[]>>({
       url: "/home/hot",
+    });
+  }
+  // 产品区块
+  static getGoods() {
+    return XtxRequestManager.instance.request<XtxResponse<cate2[]>>({
+      url: "/home/goods",
+    });
+  }
+  // 最新专题
+  static getSpecial(limit: number) {
+    return XtxRequestManager.instance.request<
+      XtxResponse<Special[]>,
+      { limit: number }
+    >({
+      url: "/home/special",
+      data: { limit },
     });
   }
 }

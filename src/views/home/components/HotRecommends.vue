@@ -6,7 +6,7 @@ import { useHomeStore } from "@/stores/homeStore";
 const homeStore = useHomeStore();
 const { hotRecommends } = storeToRefs(homeStore);
 const { getHotRecommends } = homeStore;
-getHotRecommends();
+// getHotRecommends();
 const target = useLazyLoad(getHotRecommends);
 </script>
 <template>
@@ -20,6 +20,9 @@ const target = useLazyLoad(getHotRecommends);
         </RouterLink>
       </li>
     </ul>
+    <Transition name="fade">
+      <HomeSkeleton v-if="hotRecommends.status === 'loading'" />
+    </Transition>
   </HomePanel>
 </template>
 

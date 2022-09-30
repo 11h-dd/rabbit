@@ -1,9 +1,9 @@
 <!-- src/views/home/components/HomeCategory.vue -->
 <script setup lang="ts">
 import { useCategoryStore } from "@/stores/categoryStore";
-import { useHomeStore } from "@/stores/brandStore";
+import { useHomeStores } from "@/stores/brandStore";
 import { CATEGORIES } from "@/constants/categories";
-const useHome = useHomeStore();
+const useHome = useHomeStores();
 const categoryStore = useCategoryStore();
 const { categories } = storeToRefs(categoryStore);
 const { brands } = storeToRefs(useHome);

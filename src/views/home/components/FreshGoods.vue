@@ -6,7 +6,7 @@ import useLazyLoad from "@/logics/useLazyLoad";
 const usehoem = useHomeStore();
 const { getFreshData } = usehoem;
 const { Fresh } = storeToRefs(usehoem);
-getFreshData();
+// getFreshData();
 const target = useLazyLoad(getFreshData);
 </script>
 <template>
@@ -24,6 +24,9 @@ const target = useLazyLoad(getFreshData);
           </RouterLink>
         </li>
       </ul>
+      <transition name="fade">
+        <HomeSkeleton v-if="Fresh.status === 'loading'" />
+      </transition>
     </template>
   </HomePanel>
 </template>

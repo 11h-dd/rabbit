@@ -15,15 +15,11 @@
   <div class="container">
     <HomeCategory />
     <HomeBanner />
-    <!-- <HomePanel title="主标题" subTitle="副标题">
-      <template #default> 内容 </template>
-      <template #right>
-        <XtxMore />
-      </template>
-    </HomePanel> -->
     <FreshGoods />
     <HotRecommends />
-    <div ref="target">测试元素进入离开可视区</div>
+    <HotBrands />
+    <HomeGoods />
+    <HomeSpecial />
   </div>
 </template>
 

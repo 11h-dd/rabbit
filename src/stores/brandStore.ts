@@ -15,7 +15,7 @@ type Actions = {
   getBrands(limit?: number): Promise<void>;
 };
 
-export const useHomeStore = defineStore<"home", State, Actions, Getters>(
+export const useHomeStores = defineStore<"home", State, Actions, Getters>(
   "home",
   {
     state: () => ({
