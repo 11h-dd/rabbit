@@ -1,4 +1,29 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useHomeStores } from "@/stores/brandStore";
+
+const store = useHomeStores();
+const { banners } = storeToRefs(store);
+const { getBanners } = store;
+getBanners();
+</script>
 <template>
-    <div>TopCategoryPage</div>
+  <div class="container">
+    <TopCategoryBread />
+    <XtxCarousel
+      v-if="banners.status === 'success'"
+      :count="banners.result.length"
+      style="height: 500px"
+      :carousels="banners.result"
+    >
+      <template
+        v-for="(item, index) in banners.result"
+        :key="item.id"
+        v-slot:[`default-${index}`]
+      >
+        <RouterLink :to="item.hrefUrl">
+          <img :src="item.imgUrl" :alt="item.imgUrl" />
+        </RouterLink>
+      </template>
+    </XtxCarousel>
+  </div>
 </template>

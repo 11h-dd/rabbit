@@ -1,4 +1,4 @@
 <script setup lang="ts"></script>
 <template>
-    <div>SubCategoryPage</div>
+  <div class="container"><SubCategoryBread /></div>
 </template>

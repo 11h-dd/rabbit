@@ -13,7 +13,17 @@ type Actions = {
   getCategories(): Promise<void>;
   toggle(id: string, isOpen: boolean): void;
 };
-type Getters = {};
+type Getters = {
+  //一级分类
+  currentTop: (state: State) => (topCategoryId: string) => CateGory | undefined;
+  currentTopAndSub: (state: State) => (
+    topCategoryId: string,
+    subCategoryId: string
+  ) => {
+    topCategoryId: CateGory | undefined;
+    subCategoryId: CateGory | undefined;
+  };
+};
 export const useCateGoryStore = defineStore<
   "Category",
   State,
@@ -51,5 +61,30 @@ export const useCateGoryStore = defineStore<
       // // 如果目标分类存在, 设置它的 isOpen 属性值为 target
       // if (category) category.isOpen = target;
     },
+  },
+  getters: {
+    currentTop: (state) => (topCategoryId: string) =>
+      state.categories.headerNav.find((item) => item.id === topCategoryId),
+    // currentTopAndSub(state) {
+    //   return function (topCategoryId: string, subCategoryId: string) {
+    //     const topCategory = state.categories.headerNav.find(
+    //       (item) => item.id === topCategoryId
+    //     );
+    //     const subCategory = topCategory?.children?.find(
+    //       (item) => item.id === subCategoryId
+    //     );
+    //     return { topCategory, subCategory };
+    //   };
+    // },
+    currentTopAndSub:
+      (state) => (topCategoryId: string, subCategoryId: string) => {
+        const topCategory = state.categories.headerNav.find(
+          (item) => item.id === topCategoryId
+        );
+        const subCategory = topCategory?.children?.find(
+          (item) => item.id === subCategoryId
+        );
+        return { topCategory, subCategory };
+      },
   },
 });
