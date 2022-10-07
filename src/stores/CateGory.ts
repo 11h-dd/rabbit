@@ -7,11 +7,25 @@ type State = {
     headerNav: (CateGory & { isOpen: boolean })[];
     status: Status;
   };
+  topCategories: {
+    result: {
+      [id: string]: CateGory;
+    };
+    status: Status;
+  };
+  subCategoryFilters: {
+    result: {
+      [id: string]: CateGory;
+    };
+    status: Status;
+  };
 };
 
 type Actions = {
   getCategories(): Promise<void>;
   toggle(id: string, isOpen: boolean): void;
+  getTopCategoryById(id: string): Promise<void>;
+  getSubCategoryFilters(id: string): Promise<void>;
 };
 type Getters = {
   //一级分类
@@ -33,6 +47,14 @@ export const useCateGoryStore = defineStore<
   state: () => ({
     categories: {
       headerNav: CATEGORIES.map((cateogry) => ({ ...cateogry, isOpen: false })),
+      status: "idle",
+    },
+    topCategories: {
+      result: {},
+      status: "idle",
+    },
+    subCategoryFilters: {
+      result: {},
       status: "idle",
     },
   }),
@@ -60,6 +82,38 @@ export const useCateGoryStore = defineStore<
       // );
       // // 如果目标分类存在, 设置它的 isOpen 属性值为 target
       // if (category) category.isOpen = target;
+    },
+    async getTopCategoryById(id: string) {
+      // 更新加载状态
+      this.topCategories.status = "loading";
+      // 捕获错误
+      try {
+        // 发送请求根据一级分类 id 获取分类信息
+        let response = await CategoryAPI.getTopCategoryById(id);
+        // 存储一级分类信息
+        this.topCategories.result[response.result.id] = response.result;
+        // 更新加载状态
+        this.topCategories.status = "success";
+      } catch (e) {
+        // 更新加载状态
+        this.topCategories.status = "error";
+      }
+    },
+    async getSubCategoryFilters(id: string) {
+      // 更新加载状态
+      this.subCategoryFilters.status = "loading";
+      // 捕获错误
+      try {
+        // 发送请求获取二级分类商品筛选条件
+        let response = await CategoryAPI.getSubCategoryFilters(id);
+        // 存储商品筛选条件
+        this.subCategoryFilters.result[response.result.id] = response.result;
+        // 更新加载状态
+        this.subCategoryFilters.status = "success";
+      } catch (e) {
+        // 更新加载状态
+        this.subCategoryFilters.status = "error";
+      }
     },
   },
   getters: {

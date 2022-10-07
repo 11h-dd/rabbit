@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useHomeStores } from "@/stores/brandStore";
+import AllSubCategories from "./components/AllSubCategories.vue";
 
 const store = useHomeStores();
 const { banners } = storeToRefs(store);
@@ -25,5 +26,7 @@ getBanners();
         </RouterLink>
       </template>
     </XtxCarousel>
+    <AllSubCategories />
+    <RecommendsGoods />
   </div>
 </template>

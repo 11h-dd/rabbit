@@ -1,4 +1,4 @@
 <script setup lang="ts"></script>
 <template>
-  <div class="container"><SubCategoryBread /></div>
+  <div class="container"><SubCategoryBread /> <SubCategoryFilter /></div>
 </template>

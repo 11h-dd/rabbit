@@ -8,4 +8,16 @@ export class CategoryAPI {
       url: "/home/category/head",
     });
   }
+  static getTopCategoryById(id: string) {
+    return XtxRequestManager.instance.request<XtxResponse<CateGory>>({
+      url: "/category",
+      params: { id },
+    });
+  }
+  static getSubCategoryFilters(id: string) {
+    return XtxRequestManager.instance.request<XtxResponse<CateGory>>({
+      url: "/category/sub/filter",
+      params: { id },
+    });
+  }
 }

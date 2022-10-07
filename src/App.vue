@@ -2,8 +2,8 @@
 import { RouterLink, RouterView } from "vue-router";
 import XtxRequestManager from "./utils/XtxRequestManager";
 import { useUserStore } from "@/stores/userStore";
-const userStore = useUserStore();
-userStore.$patch({ profile: { token: "test token" } });
+// const userStore = useUserStore();
+// userStore.$patch({ profile: { token: "test token" } });
 // XtxRequestManager.instance.request<'返回值类型', {
 //   a: 'data数据类型'
 // }>({

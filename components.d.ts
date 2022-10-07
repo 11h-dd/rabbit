@@ -5,8 +5,10 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AllSubCategories: typeof import('./src/views/category/components/AllSubCategories.vue')['default']
     FreshGoods: typeof import('./src/views/home/components/FreshGoods.vue')['default']
     Goods: typeof import('./src/views/home/components/Goods.vue')['default']
+    GoodsItem: typeof import('./src/views/category/components/GoodsItem.vue')['default']
     HomeBanner: typeof import('./src/views/home/components/HomeBanner.vue')['default']
     HomeCategory: typeof import('./src/views/home/components/HomeCategory.vue')['default']
     HomeGoods: typeof import('./src/views/home/components/HomeGoods.vue')['default']
@@ -16,9 +18,11 @@ declare module '@vue/runtime-core' {
     HomeSpecial: typeof import('./src/views/home/components/HomeSpecial.vue')['default']
     HotBrands: typeof import('./src/views/home/components/HotBrands.vue')['default']
     HotRecommends: typeof import('./src/views/home/components/HotRecommends.vue')['default']
+    RecommendsGoods: typeof import('./src/views/category/components/RecommendsGoods.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SubCategoryBread: typeof import('./src/views/category/components/SubCategoryBread.vue')['default']
+    SubCategoryFilter: typeof import('./src/views/category/components/SubCategoryFilter.vue')['default']
     SubCategoryPage: typeof import('./src/views/category/SubCategoryPage.vue')['default']
     TopCategoryBread: typeof import('./src/views/category/components/TopCategoryBread.vue')['default']
     TopCategoryPage: typeof import('./src/views/category/TopCategoryPage.vue')['default']
