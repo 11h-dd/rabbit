@@ -1,6 +1,9 @@
 import { CategoryAPI } from "@/api/CategoryAPI";
 import { CATEGORIES } from "@/constants/categories";
 import type { CateGory } from "@/types/cateGory";
+import type { Goods } from "@/types/Goods";
+import type { GoodsRequestParams } from "@/types/GoodsRequestParams";
+import type { Pagination } from "@/types/Response";
 import type { Status } from "@/types/Status";
 type State = {
   categories: {
@@ -19,6 +22,10 @@ type State = {
     };
     status: Status;
   };
+  categoryGoods: {
+    result: Pagination<Goods>;
+    status: Status;
+  };
 };
 
 type Actions = {
@@ -26,6 +33,10 @@ type Actions = {
   toggle(id: string, isOpen: boolean): void;
   getTopCategoryById(id: string): Promise<void>;
   getSubCategoryFilters(id: string): Promise<void>;
+  getCategoryGoods(
+    categoryId: GoodsRequestParams["categoryId"],
+    reqParams?: Partial<Omit<GoodsRequestParams, "categoryId">>
+  ): Promise<void>;
 };
 type Getters = {
   //一级分类
@@ -55,6 +66,16 @@ export const useCateGoryStore = defineStore<
     },
     subCategoryFilters: {
       result: {},
+      status: "idle",
+    },
+    categoryGoods: {
+      result: {
+        page: 0,
+        pages: 0,
+        pageSize: 0,
+        counts: 0,
+        items: [],
+      },
       status: "idle",
     },
   }),
@@ -113,6 +134,48 @@ export const useCateGoryStore = defineStore<
       } catch (e) {
         // 更新加载状态
         this.subCategoryFilters.status = "error";
+      }
+    },
+    async getCategoryGoods(categoryId, reqParams) {
+      // 如果数据已经加载完成, 不再进行加载
+      if (this.categoryGoods.status === "finished") return;
+      // 更新加载状态
+      this.categoryGoods.status = "loading";
+      // 捕获错误
+      try {
+        // 发送请求获取二级分类商品数据
+        let response = await CategoryAPI.getCategoryGoods(
+          categoryId,
+          reqParams
+        );
+        // 重新在本地存储分页数据以及商品数据
+        if (reqParams?.page === 1) {
+          // 存储状态
+          this.categoryGoods.result = response.result;
+        } else {
+          // 累加状态
+          this.categoryGoods.result = {
+            ...response.result,
+            items: [
+              ...this.categoryGoods.result.items,
+              ...response.result.items,
+            ],
+          };
+        }
+        // 如果当前请求页已经是最后一页或者服务端没有商品数据
+        if (
+          reqParams?.page === response.result.pages ||
+          response.result.pages === 0
+        ) {
+          // 更新加载状态
+          this.categoryGoods.status = "finished";
+        } else {
+          // 更新加载状态
+          this.categoryGoods.status = "success";
+        }
+      } catch (e) {
+        // 更新加载状态
+        this.categoryGoods.status = "error";
       }
     },
   },

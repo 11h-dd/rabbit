@@ -43,6 +43,7 @@ function OnSelectedFiltersChanged(filter: Partial<SelectFilters>) {
     },
     {}
   );
+
   emit("onChanged", params);
 }
 onBeforeRouteUpdate((to) => {
@@ -63,7 +64,7 @@ onBeforeRouteUpdate((to) => {
       <div class="head">品牌：</div>
       <div class="body">
         <a
-          class="active"
+          :class="{ active: selectedFilters.brandId == undefined }"
           href="javascript:"
           @click="OnSelectedFiltersChanged({ brandId: undefined })"
           >全部</a
@@ -72,6 +73,7 @@ onBeforeRouteUpdate((to) => {
           href="javascript:"
           v-for="brand in subCategoryFilters.result[route.params.sub as string].brands"
           :key="brand.id"
+          :class="{ active: selectedFilters.brandId == brand.id }"
           @click="OnSelectedFiltersChanged({ brandId: brand.id })"
           >{{ brand.name }}</a
         >
@@ -85,8 +87,10 @@ onBeforeRouteUpdate((to) => {
       <div class="head">{{ saleProperties.name }}:</div>
       <div class="body">
         <a
-          class="active"
           href="javascript:"
+          :class="{
+            active: selectedFilters[saleProperties.name] == undefined,
+          }"
           @click="
             OnSelectedFiltersChanged({ [saleProperties.name]: undefined })
           "
@@ -96,6 +100,9 @@ onBeforeRouteUpdate((to) => {
           href="javascript:"
           v-for="property in saleProperties.properties"
           :key="property.id"
+          :class="{
+            active: selectedFilters[saleProperties.name] == property.name,
+          }"
           @click="
             OnSelectedFiltersChanged({ [saleProperties.name]: property.name })
           "
