@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { Banner } from "@/types/Banner";
 interface Props {
-  carousels: Banner[];
+  // carousels: any[];
+  count: number;
   autoPlay?: boolean;
   // 自动轮播间隔时间
   duration?: number;
@@ -20,9 +20,9 @@ function toggle(step = 1) {
   let nextIndex = current.value + step;
   // 左边溢出
   if (nextIndex < 0) {
-    current.value = props.carousels.length - 1;
+    current.value = props.count - 1;
     // 右边溢出
-  } else if (nextIndex > props.carousels.length - 1) {
+  } else if (nextIndex > props.count - 1) {
     current.value = 0;
   } else {
     // 正常范围
@@ -32,7 +32,7 @@ function toggle(step = 1) {
 //自动轮播
 function StartAutoplay() {
   clearInterval(timer);
-  if (props.autoPlay && props.carousels.length > 1) {
+  if (props.autoPlay && props.count > 1) {
     timer = setInterval(toggle, props.duration);
   }
 }
@@ -49,8 +49,8 @@ onUnmounted(StopPlay);
   <div class="xtx-carousel" @mouseenter="StopPlay" @mouseleave="StartAutoplay">
     <ul class="carousel-body">
       <li
-        v-for="(item, index) in carousels"
-        :key="item.id"
+        v-for="(item, index) in count"
+        :key="index"
         class="carousel-item"
         :class="{ fade: current === index }"
       >
@@ -65,8 +65,8 @@ onUnmounted(StopPlay);
     ></a>
     <div class="carousel-indicator">
       <span
-        v-for="(item, index) in carousels"
-        :key="item.id"
+        v-for="(item, index) in count"
+        :key="index"
         :class="{ active: index === current }"
         @click="current = index"
       ></span>

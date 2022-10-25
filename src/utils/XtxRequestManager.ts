@@ -9,7 +9,7 @@ export default class XtxRequestManager {
   private static _singletonInstance: XtxRequestManager;
   private readonly _instance: XtxAxiosInstance;
   private _userStore = useUserStore();
-  public static baseURL = "https://pcapi-xiaotuxian-front-devtest.itheima.net/";
+  public static baseURL = "https://apipc-xiaotuxian-front.itheima.net/";
   private constructor() {
     this._instance = axios.create({ baseURL: XtxRequestManager.baseURL });
     this._instance.interceptors.request.use(
@@ -29,8 +29,9 @@ export default class XtxRequestManager {
         this._userStore.$reset();
         router.replace("/login");
       }
-      throw Error();
+      // throw Error();
     }
+    return Promise.reject(err);
   }
   static get instance() {
     if (typeof XtxRequestManager._singletonInstance === "undefined") {
@@ -39,7 +40,7 @@ export default class XtxRequestManager {
     return XtxRequestManager._singletonInstance;
   }
   private _addTokenToRequestHeader(config: AxiosRequestConfig) {
-    const token = this._userStore.profile.token;
+    const token = this._userStore.profile.result.token;
     if (token) config.headers = { Authorization: `Bearer ${token}` };
     return config;
   }

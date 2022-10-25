@@ -9,6 +9,8 @@ export interface CateGory {
   goods: Goods[] | undefined;
   saleProperties: SaleProperty[];
   brands: Brands[];
+  layer: number;
+  parent: CateGory | undefined;
 }
 interface SaleProperty {
   id: string;

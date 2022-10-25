@@ -2,22 +2,31 @@
 import { useUserStore } from "@/stores/userStore";
 const useUserStores = useUserStore();
 const { profile } = storeToRefs(useUserStores);
+const router = useRouter();
+function logout() {
+  // 清除用户信息
+  useUserStores.$reset();
+  // 跳转到首页
+  router.push("/");
+}
 </script>
 <!-- src/components/XtxTopNav.vue -->
 <template>
   <nav class="app-top-nav">
     <div class="container">
       <ul>
-        <template v-if="profile.token">
+        <template v-if="profile.result.token">
           <li>
             <a href="javascript:"
-              ><i class="iconfont icon-user"></i>{{ profile.account }}</a
+              ><i class="iconfont icon-user"></i>{{ profile.result.account }}</a
             >
           </li>
-          <li><a href="javascript:">退出登录</a></li>
+          <li><a href="javascript:" @click="logout">退出登录</a></li>
         </template>
         <template v-else>
-          <li><a href="javascript:">请先登录</a></li>
+          <li>
+            <a @click="router.push('/login')" href="javascript:">请先登录</a>
+          </li>
           <li><a href="javascript:">免费注册</a></li>
         </template>
         <li><a href="javascript:">我的订单</a></li>

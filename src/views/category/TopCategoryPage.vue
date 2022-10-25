@@ -14,7 +14,6 @@ getBanners();
       v-if="banners.status === 'success'"
       :count="banners.result.length"
       style="height: 500px"
-      :carousels="banners.result"
     >
       <template
         v-for="(item, index) in banners.result"

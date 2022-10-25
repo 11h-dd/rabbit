@@ -13,7 +13,7 @@ getBanners();
 <template>
   <div class="home-banner">
     <XtxCarousel
-      :carousels="banners.result"
+      :count="banners.result.length"
       v-if="banners.status === 'success'"
     >
       <template

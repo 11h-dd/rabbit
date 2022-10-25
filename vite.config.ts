@@ -25,7 +25,7 @@ export default defineConfig({
     //自动引入库
     AutoImport({
       // 注册要自动引入的库
-      imports: ["vue", "vue-router", "pinia", "@vueuse/core"],
+      imports: ["vue", "vue-router", "pinia", "@vueuse/core", "vee-validate"],
       //, "@vueuse/core"
       // 可以选择auto-import.d.ts生成的位置，使用ts建议设置为'src/auto-import.d.ts'
       dts: "auto-import.d.ts",

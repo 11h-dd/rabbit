@@ -1,6 +1,6 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue","auto-import.d.ts"],
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue","auto-import.d.ts","vue-global-props.d.ts"],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
