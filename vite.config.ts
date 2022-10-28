@@ -8,6 +8,7 @@ import AutoImport from "unplugin-auto-import/vite";
 // https://vitejs.dev/config/
 export default defineConfig({
   server: { port: 8080 },
+  build: { assetsInlineLimit: 10000 },
   plugins: [
     vue(),
     vueJsx(),

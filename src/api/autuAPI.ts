@@ -54,4 +54,35 @@ export class AuthAPI {
       }
     >({ url: "/login/social", method: "post", data: { unionId, source: 1 } });
   }
+  // 发送短信验证码(绑定已有账号)
+  static sendMsgCodeOfBindQQ(
+    mobile: string,
+    unionId: string,
+    source: number = 1
+  ) {
+    return XtxRequestManager.instance.request<
+      XtxResponse<null>,
+      { mobile: string; unionId: string; source: number }
+    >({
+      url: "/login/social/code",
+      params: { mobile, unionId, source },
+    });
+  }
+  // QQ登录: 绑定站点已有账号
+  static loginByBindAccount(mobile: string, code: string, unionId: string) {
+    return XtxRequestManager.instance.request<
+      XtxResponse<User>,
+      { mobile: string; code: string; unionId: string }
+    >({
+      url: "/login/social/bind",
+      method: "post",
+      data: { mobile, code, unionId },
+    });
+  }
+  static checkAccountUnique(account: string) {
+    return XtxRequestManager.instance.request<XtxResponse<{ valid: boolean }>>({
+      url: "/register/check",
+      params: { account },
+    });
+  }
 }

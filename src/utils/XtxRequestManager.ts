@@ -27,7 +27,12 @@ export default class XtxRequestManager {
     if (err instanceof AxiosError) {
       if (err.response?.status === 401) {
         this._userStore.$reset();
-        router.replace("/login");
+        router.replace(
+          `/login?return=${encodeURIComponent(
+            router.currentRoute.value.fullPath
+          )}`
+          //有特殊字符的字符串的时候需要编码 更加安全
+        );
       }
       // throw Error();
     }

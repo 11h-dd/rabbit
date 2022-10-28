@@ -7,14 +7,20 @@ const accountLogin = ref(true);
 const store = useUserStore();
 const { profile } = storeToRefs(store);
 const router = useRouter();
+const route = useRoute();
 watch(
   () => profile.value.status,
   (status) => {
     if (status == "success") {
       message({ type: "success", msg: "登录成功" });
-      router.push("/");
+      const redirectURL = route.query.return;
+      if (typeof redirectURL !== "undefined") {
+        router.push(redirectURL as string);
+      } else {
+        router.push("/");
+      }
     } else if (status == "error") {
-      message({ type: "success", msg: profile.value.error });
+      message({ type: "warn", msg: profile.value.error });
     }
   }
 );

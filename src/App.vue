@@ -4,6 +4,7 @@ import XtxRequestManager from "./utils/XtxRequestManager";
 import { useUserStore } from "@/stores/userStore";
 import VeeValidateDemoOne from "./test/VeeValidateDemoOne.vue";
 import XtxMessage from "./components/XtxMessage.vue";
+import myConfirm from "./utils/myConfirm";
 // const userStore = useUserStore();
 // userStore.$patch({ profile: { token: "test token" } });
 // XtxRequestManager.instance.request<'返回值类型', {

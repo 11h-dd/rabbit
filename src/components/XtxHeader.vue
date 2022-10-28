@@ -10,11 +10,9 @@
         <i class="iconfont icon-search"></i>
         <input type="text" placeholder="搜一搜" />
       </div>
-      <div class="cart">
-        <a class="curr" href="#">
-          <i class="iconfont icon-cart"></i><em>2</em>
-        </a>
-      </div>
+      <XtxHeaderCart
+        v-if="$route.path != '/' && $route.path !== '/cart'"
+      ></XtxHeaderCart>
     </div>
   </header>
 </template>

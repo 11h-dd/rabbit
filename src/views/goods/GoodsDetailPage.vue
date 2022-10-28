@@ -1,8 +1,13 @@
 <script setup lang="ts">
+import { CartAPI } from "@/api/CartAPI";
+import { useCartStore } from "@/stores/cartStore";
 import { useGoodsStore } from "@/stores/goodsStore";
+import message from "@/utils/message";
+import { AxiosError } from "axios";
 import { onBeforeRouteUpdate } from "vue-router";
 import GoodsBread from "./components/GoodsBread.vue";
 const store = useGoodsStore();
+const cartStore = useCartStore();
 const { goodsInfo } = storeToRefs(store);
 const { getGoodsInfo, updateGoods } = store;
 const route = useRoute();
@@ -14,6 +19,23 @@ const { result, status } = toRefs(goodsInfo.value);
 onBeforeRouteUpdate((to) => getGoodsInfo(to.params.id as string));
 const skuId = ref<string | undefined>();
 const count = ref(1);
+async function addProductToCart() {
+  if (typeof skuId.value === "undefined") {
+    message({ type: "warn", msg: "请选择商品" });
+    return;
+  }
+  try {
+    await cartStore.addProductToCart(skuId.value, count.value);
+    message({ type: "success", msg: "添加成功" });
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      if (error.response?.data.code === "10019") {
+        message({ type: "error", msg: `请登录` });
+        //直接跳转过去是因为 XtxRequestManager处理了(未授权)
+      }
+    }
+  }
+}
 </script>
 <template>
   <div class="xtx-goods-page">
@@ -40,7 +62,10 @@ const count = ref(1);
             :max="goodsInfo.result.inventory"
             v-model:count="count"
           />
-          <XtxButton type="primary" :style="{ 'margin-top': '20px' }"
+          <XtxButton
+            type="primary"
+            :style="{ 'margin-top': '20px' }"
+            @click="addProductToCart"
             >加入购物车</XtxButton
           >
         </div>
