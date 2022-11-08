@@ -14,17 +14,18 @@ interface AddressCode {
   cityCode: string;
   countyCode: string;
 }
+interface AddressName {
+  provinceName: string;
+  cityName: string;
+  countyName: string;
+}
 const visible = ref(false);
 //缓存成熟数据
 let cachedCities: City[] = [];
 const status = ref<Status>("idle");
 const cities = ref<City[]>([]);
 let addressCode: Partial<AddressCode> = {};
-interface AddressName {
-  provinceName: string;
-  cityName: string;
-  countyName: string;
-}
+
 //地区名字
 const addressname: Partial<AddressName> = {};
 const selectCity = useVModel(props, "fullLocation");

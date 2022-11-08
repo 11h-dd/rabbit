@@ -1,11 +1,15 @@
 <script setup lang="ts">
+import { useCartStore } from "@/stores/cartStore";
 import { useUserStore } from "@/stores/userStore";
 const useUserStores = useUserStore();
+const useCartStores = useCartStore();
 const { profile } = storeToRefs(useUserStores);
 const router = useRouter();
 function logout() {
   // 清除用户信息
   useUserStores.$reset();
+  //清空购物车
+  useCartStores.$reset();
   // 跳转到首页
   router.push("/");
 }
@@ -17,8 +21,9 @@ function logout() {
       <ul>
         <template v-if="profile.result.token">
           <li>
-            <a href="javascript:"
-              ><i class="iconfont icon-user"></i>{{ profile.result.account }}</a
+            <RouterLink to="/member"
+              ><i class="iconfont icon-user"></i
+              >{{ profile.result.account }}</RouterLink
             >
           </li>
           <li><a href="javascript:" @click="logout">退出登录</a></li>

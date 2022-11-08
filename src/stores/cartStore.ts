@@ -24,6 +24,7 @@ type Actions = {
     count?: number;
   }): Promise<Cart>;
   selecteAndDeselect(selected: boolean): Promise<void>;
+  alterSku(oldSkuId: string, newSkuId: string): Promise<void>;
 };
 type Getters = {
   //可购买
@@ -84,6 +85,18 @@ export const useCartStore = defineStore<"cart", State, Getters, Actions>(
         // 发送请求实现全选和取消全选
         await CartAPI.selecteAndDeselect(selected);
         // 更新购物车
+        this.getCarts();
+      },
+      async alterSku(oldSkuId, newSkuId) {
+        //先删除购物车中的已存在商品,在添加新的
+        const oldGoods = this.carts.result.find(
+          (item) => item.skuId === oldSkuId
+        );
+        if (!oldGoods) return;
+        // if(typeof oldGoods === 'undefined') return
+        const oldGoodsCount = oldGoods.count;
+        await CartAPI.removeGoodsOfCart({ ids: [oldSkuId] });
+        await CartAPI.addProductToCart(newSkuId, oldGoodsCount);
         this.getCarts();
       },
     },

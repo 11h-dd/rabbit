@@ -2,7 +2,9 @@ import {
   createRouter,
   createWebHistory,
   createWebHashHistory,
+  RouterView,
 } from "vue-router";
+import authGard from "./authGuard";
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -29,6 +31,18 @@ const router = createRouter({
           path: "/cart",
           component: () => import("@/views/cart/CatrPage.vue"),
         },
+        {
+          path: "/checkout/order",
+          component: () => import("@/views/pay/checkoutPage.vue"),
+        },
+        {
+          path: "/checkout/pay",
+          component: () => import("@/views/pay/PayPage.vue"),
+        },
+        {
+          path: "/pay/callback",
+          component: () => import("@/views/pay/PayResultPage.vue"),
+        },
       ],
     },
     {
@@ -46,7 +60,46 @@ const router = createRouter({
         return true;
       },
     },
+    {
+      path: "/",
+      component: () => import("@/components/XtxLayout.vue"),
+      children: [
+        {
+          path: "member",
+          component: () => import("@/components/XtxMemberLayout.vue"),
+          redirect: "/member/home",
+          children: [
+            {
+              path: "home",
+              component: () =>
+                import("@/views/memeber/home/MemberHomePage.vue"),
+            },
+            {
+              path: "order",
+              component: () => h(RouterView),
+              children: [
+                {
+                  path: "",
+                  component: () =>
+                    import("@/views/memeber/order/OrderListPage.vue"),
+                },
+                {
+                  path: ":id",
+                  component: () =>
+                    import("@/views/memeber/order/OrderDetailPage.vue"),
+                },
+              ],
+            },
+            {
+              path: "order/:id",
+              component: () =>
+                import("@/views/memeber/order/OrderDetailPage.vue"),
+            },
+          ],
+        },
+      ],
+    },
   ],
 });
-
+router.beforeEach(authGard);
 export default router;

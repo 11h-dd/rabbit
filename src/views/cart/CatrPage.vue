@@ -1,8 +1,34 @@
 <script setup lang="ts">
 import { useCartStore } from "@/stores/cartStore";
+import message from "@/utils/message";
+import myConfirm from "@/utils/myConfirm";
 
 const store = useCartStore();
 store.getCarts();
+async function removeGoodsOfCarts(skuIds: string[]) {
+  try {
+    await myConfirm({ content: "真的要删除吗" });
+  } catch (err) {
+    return;
+  }
+  try {
+    store.removeGoodsOfCart({ ids: skuIds });
+    message({ type: "success", msg: "删除成功" });
+  } catch (error) {
+    message({ type: "error", msg: "删除失败" });
+  }
+}
+async function removeCartGoodsMany() {
+  const skuIds = store.selectGoods.map((item) => item.skuId);
+  if (skuIds.length > 0) {
+    try {
+      await store.removeGoodsOfCart({ ids: skuIds });
+      message({ type: "success", msg: "删除成功" });
+    } catch (error) {
+      message({ type: "error", msg: "删除失败" });
+    }
+  }
+}
 </script>
 <template>
   <div class="cart-page">
@@ -55,7 +81,7 @@ store.getCarts();
               </td>
               <td class="tc">
                 <p>&yen;{{ i.price }}</p>
-                <p>
+                <p v-if="+i.price - +i.nowPrice !== 0">
                   比加入时降价
                   <span class="red">&yen;{{ +i.price - +i.nowPrice }}</span>
                 </p>
@@ -74,7 +100,14 @@ store.getCarts();
               </td>
               <td class="tc">
                 <p><a href="javascript:">移入收藏夹</a></p>
-                <p><a class="green" href="javascript:">删除</a></p>
+                <p>
+                  <a
+                    class="green"
+                    href="javascript:"
+                    @click="removeGoodsOfCarts([i.skuId])"
+                    >删除</a
+                  >
+                </p>
                 <p><a href="javascript:">找相似</a></p>
               </td>
             </tr>
@@ -116,9 +149,13 @@ store.getCarts();
       <div class="action">
         <div class="batch">
           <XtxCheckbox>全选</XtxCheckbox>
-          <a href="javascript:">删除商品</a>
+          <a href="javascript:" @click="removeCartGoodsMany">删除商品</a>
           <a href="javascript:">移入收藏夹</a>
-          <a href="javascript:">清空失效商品</a>
+          <a
+            href="javascript:"
+            @click="store.removeGoodsOfCart({ clearInvalid: true })"
+            >清空失效商品</a
+          >
         </div>
         <div class="total">
           共 {{ store.effectiveTotalQuantity }} 件商品，已选择

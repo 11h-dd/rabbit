@@ -15,7 +15,9 @@
     "@vueuse/components": "8.7.5",
     "@vueuse/core": "9.2.0",
     "axios": "0.27.2",
+    "dayjs": "^1.11.4",
     "lodash": "4.17.21",
+    "msw": "^0.47.4",
     "normalize.css": "8.0.1",
     "pinia": "^2.0.14",
     "pinia-plugin-persistedstate": "1.6.1",
@@ -24,6 +26,7 @@
     "vue-router": "^4.0.16"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "@rushstack/eslint-patch": "^1.1.0",
     "@types/node": "^16.11.41",
     "@vitejs/plugin-vue": "^2.3.3",
@@ -40,6 +43,10 @@
     "unplugin-auto-import": "0.8.8",
     "unplugin-vue-components": "0.19.6",
     "vite": "^2.9.12",
+    "vite-plugin-require-transform": "^1.0.4",
     "vue-tsc": "^0.38.1"
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }

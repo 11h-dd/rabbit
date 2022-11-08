@@ -2,9 +2,17 @@
 import { CartAPI } from "@/api/CartAPI";
 import type { Sku, Spec } from "@/types/Goods";
 import type { Status } from "@/types/Status";
-
+import message from "@/utils/message";
+import { useCartStore } from "@/stores/cartStore";
+const cartStore = useCartStore();
 const props = defineProps<{ skuId: string; attrsText: string }>();
+
 const visible = ref(false);
+const target = ref(null);
+onClickOutside(target, hide);
+const status = ref<Status>("idle");
+const skuInfo = ref<{ specs: Spec[]; skus: Sku[] }>({ specs: [], skus: [] });
+const newSkuId = ref<string | undefined>(undefined);
 function show() {
   getGoodsSku(props.skuId);
   visible.value = true;
@@ -15,10 +23,7 @@ function hide() {
 function toggle() {
   visible.value ? hide() : show();
 }
-const target = ref(null);
-onClickOutside(target, hide);
-const status = ref<Status>("idle");
-const skuInfo = ref<{ specs: Spec[]; skus: Sku[] }>({ specs: [], skus: [] });
+
 async function getGoodsSku(id: string) {
   status.value = "loading";
   try {
@@ -31,6 +36,19 @@ async function getGoodsSku(id: string) {
   } catch (error) {
     // 更新加载状态
     status.value = "error";
+  }
+}
+async function alterSku() {
+  if (typeof newSkuId.value !== "undefined") {
+    try {
+      await cartStore.alterSku(props.skuId, newSkuId.value);
+      message({ type: "success", msg: "修改成功" });
+      hide();
+    } catch (err) {
+      message({ type: "error", msg: "修改失败" });
+    }
+  } else {
+    message({ type: "warn", msg: "请选择规格" });
   }
 }
 </script>
@@ -48,8 +66,14 @@ async function getGoodsSku(id: string) {
         :skuId="skuId"
         :specs="skuInfo.specs"
         :skus="skuInfo.skus"
+        @complete="newSkuId = $event.skuId"
+        @incomplete="newSkuId = undefined"
       ></GoodsSku>
-      <XtxButton type="primary" size="mini" style="margin-left: 60px"
+      <XtxButton
+        @click="alterSku"
+        type="primary"
+        size="mini"
+        style="margin-left: 60px"
         >确定</XtxButton
       >
     </div>
