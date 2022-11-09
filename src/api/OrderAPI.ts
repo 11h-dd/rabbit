@@ -101,4 +101,12 @@ export default class OrderAPI {
       url: `/member/order/${id}/logistics`,
     });
   }
+  //再次购买
+  static createOrderById(id: string) {
+    return XtxRequestManager.instance.request<
+      XtxResponse<OrderOfCreateResponse>
+    >({
+      url: `/member/order/repurchase/${id}`,
+    });
+  }
 }

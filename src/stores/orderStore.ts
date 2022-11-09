@@ -79,6 +79,8 @@ type Actions = {
   confirmReceiptGoods(id: string): Promise<null>;
   //获取物流信息
   getViewLogistics(is: string): Promise<void>;
+  // 再次购买
+  createOrderById(id: string): Promise<void>;
 };
 export const useOrderStore = defineStore<"order", State, Getters, Actions>(
   "order",
@@ -221,6 +223,22 @@ export const useOrderStore = defineStore<"order", State, Getters, Actions>(
           this.logistic.status = "success";
         } catch (error) {
           this.logistic.status = "error";
+        }
+      },
+      async createOrderById(id) {
+        // 更新加载状态
+        this.orderOfCreate.status = "loading";
+        // 捕获请求错误
+        try {
+          // 发送请求 创建订单
+          const response = await OrderAPI.createOrderById(id);
+          // 存储订单信息
+          this.orderOfCreate.result = response.result;
+          // 更新加载状态
+          this.orderOfCreate.status = "success";
+        } catch (error) {
+          // 更新加载状态
+          this.orderOfCreate.status = "error";
         }
       },
     },

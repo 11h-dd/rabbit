@@ -4,6 +4,7 @@ import { XtxSteps } from "@/components/XtxSteps";
 import { useOrderStore } from "@/stores/orderStore";
 const router = useRoute();
 const store = useOrderStore();
+
 store.getORderInforbyId(router.params.id as string);
 </script>
 <template>
@@ -40,7 +41,11 @@ store.getORderInforbyId(router.params.id as string);
       ></XtxStepItem>
     </XtxSteps>
     <!-- 物流栏 -->
+    <DetailLogistics
+      v-if="[3, 4, 5].includes(store.orderInfo.result.orderState)"
+    />
     <!-- 订单商品信息 -->
+    <DetailOrderGooods />
   </div>
 </template>
 

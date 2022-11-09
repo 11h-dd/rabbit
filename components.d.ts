@@ -15,6 +15,8 @@ declare module '@vue/runtime-core' {
     CommentList: typeof import('./src/views/goods/components/CommentList.vue')['default']
     CommentScreen: typeof import('./src/views/goods/components/CommentScreen.vue')['default']
     CommentSort: typeof import('./src/views/goods/components/CommentSort.vue')['default']
+    DetailLogistics: typeof import('./src/views/memeber/order/components/DetailLogistics.vue')['default']
+    DetailOrderGooods: typeof import('./src/views/memeber/order/components/DetailOrderGooods.vue')['default']
     FreshGoods: typeof import('./src/views/home/components/FreshGoods.vue')['default']
     Goods: typeof import('./src/views/home/components/Goods.vue')['default']
     GoodsBread: typeof import('./src/views/goods/components/GoodsBread.vue')['default']

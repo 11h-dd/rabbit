@@ -5,7 +5,14 @@ import type { SubmitOrderObject } from "@/types/Orders";
 import message from "@/utils/message";
 const store = useCartStore();
 const orderStore = useOrderStore();
-orderStore.createOrder();
+const route = useRoute();
+//根据路由参数决定是购买还是再次购买
+if (route.query.id) {
+  orderStore.createOrderById(route.query.id as string);
+} else {
+  orderStore.createOrder();
+}
+
 const receRef = ref();
 //提交订单
 const router = useRouter();
